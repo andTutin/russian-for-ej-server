@@ -1,8 +1,11 @@
 import { alphabet } from "../alphabet";
+import { useSpeaker } from "../Speaker";
 
 export const Alphabet = () => {
+  const sayit = useSpeaker();
+
   return (
-    <article>
+    <article onClick={sayit}>
       <header>
         <h2>Russian Alphabet</h2>
       </header>
@@ -15,8 +18,8 @@ export const Alphabet = () => {
         }}
       >
         {alphabet.map((l) => (
-          <a href="/" data-say={l} key={l}>
-            <i>{l.toUpperCase()}</i>
+          <a href="/" key={l}>
+            <i data-say={l}>{l.toUpperCase()}</i>
           </a>
         ))}
       </div>
