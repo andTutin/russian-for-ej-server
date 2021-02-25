@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./mvp.css";
 import reportWebVitals from "./reportWebVitals";
+import { SpeakerProvider } from "./Speaker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SpeakerProvider>
+      <App />
+    </SpeakerProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

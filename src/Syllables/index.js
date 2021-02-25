@@ -1,6 +1,9 @@
 import { vowels, consonants } from "../alphabet";
+import { useSpeaker } from "../Speaker";
 
 export const Syllables = () => {
+  const sayit = useSpeaker();
+
   return (
     <article>
       <header>
@@ -12,19 +15,21 @@ export const Syllables = () => {
         like french.
       </p>
       <p>This is a consonant + vowel letter combinations table</p>
-      <table>
+      <table onClick={sayit}>
         <thead>
           <tr>
             <th></th>
             {consonants.map((l) => (
-              <th key={l} data-say={l}>{l}</th>
+              <th key={l} data-say={l}>
+                {l}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {vowels.map((v) => (
             <tr key={v}>
-              <th dats-say={v}>{v}</th>
+              <th data-say={v}>{v}</th>
               {consonants.map((c) => (
                 <th key={c} data-say={c + v}>
                   {c + v}
