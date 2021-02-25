@@ -402,7 +402,7 @@ table {
     border-radius: var(--border-radius);
     border-spacing: 0;
     display: inline-block;
-    max-width: 100%;
+    width: 100%;
     overflow-x: auto;
     padding: 0;
     white-space: nowrap;
@@ -413,6 +413,10 @@ table th,
 table tr {
     padding: 0.4rem 0.8rem;
     text-align: var(--justify-important);
+}
+
+table th {
+    cursor: pointer;
 }
 
 table thead {

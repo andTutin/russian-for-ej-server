@@ -1,5 +1,5 @@
 export const alphabet = [
-    'a',
+    'а',
     'б',
     'в',
     'г',
