@@ -12,6 +12,10 @@ export const SpeakerProvider = ({ children }) => {
     .find((v) => v.name === "Russian");
 
   const sayit = (phrase) => {
+    if (speechSynthesis.speaking) {
+      return
+    }
+    
     u.text = phrase;
     speechSynthesis.speak(u);
   };
