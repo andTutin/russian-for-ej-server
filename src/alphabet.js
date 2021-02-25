@@ -33,3 +33,8 @@ export const alphabet = [
     'ю',
     'я',
 ]
+export const vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
+const signs = ["ь", "ъ"];
+export const consonants = alphabet
+  .filter((l) => !vowels.includes(l))
+  .filter((l) => !signs.includes(l));
