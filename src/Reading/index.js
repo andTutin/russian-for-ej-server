@@ -5,17 +5,16 @@ export const Reading = () => {
   const sayit = useSpeaker();
 
   return (
-    <article>
+    <article  onClick={sayit}>
       <header>
         <h2>This is a Syllables table</h2>
       </header>
       <p>
-        Reading russian is kinda WYSIWYG, letter = sound (if it has), we just
-        pronunce sounds one after another, with some exeptions, but it's not
+        Reading russian is kinda WYSIWYG. letter = sound. There are some exeptions, but it's not
         like french.
       </p>
       <p>This is a consonant + vowel letter combinations table</p>
-      <table onClick={sayit}>
+      <table>
         <thead>
           <tr>
             <th></th>
@@ -40,21 +39,21 @@ export const Reading = () => {
         </tbody>
       </table>
       <p>
-        There are probably combos that don't exist, but there was a loop in
-        script, and i am too lazy to handle exceptions
+        There are probably combos never used or break the rules, but there was a loop in
+        script, and i am too lazy to handle exceptions (you wont meet them anyway )
       </p>
       <p>
         So you take the word, split in on syllables, read single letters and
         these combos
       </p>
       <aside>
-        <p>for example lets read word 'Вдохновение' (inspiration)</p>
+        <p>for example lets read word '<span data-say="вдохновение" style={{curdor: 'pointer'}}>Вдохновение</span>' (inspiration)</p>
         <ul>
           <li>syllables вдо-хно-ве-ни-е</li>
           <li>then в[до]-х[но]-[ве]-[ни]- е</li>
           <li>[] means it exist in table, find it and press to listen</li>
           <li>
-            connect single letters (sometimes it more than one? but its not a
+            connect single letters (sometimes it more than one, but its not a
             problem) and combos
           </li>
           <li>result v[do] - kh[no] - [ve] - [nee] - ye</li>
