@@ -15,7 +15,7 @@ export const About = () => {
       </aside>
       <aside>
         <Quote speech="...and do the other things" speaker="Same guys" />
-        <Quote speech="What a hell?" speaker="John F. Kenned" />
+        <Quote speech="What a hell?" speaker="John F. Kennedy" />
       </aside>
       <h1>
         <br />

@@ -1,7 +1,7 @@
 import { vowels, consonants } from "../alphabet";
 import { useSpeaker } from "../Speaker";
 
-export const Syllables = () => {
+export const Reading = () => {
   const sayit = useSpeaker();
 
   return (

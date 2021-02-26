@@ -1,8 +1,8 @@
 import { Header } from "./Header";
 import { About } from "./About";
 import { Alphabet } from "./Alphabet";
-import { Syllables } from "./Syllables";
-import { Phrasebook } from "./Prasebook";
+import { Reading } from "./Reading";
+import { Phrasebook } from "./Phrasebook";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,7 +18,7 @@ function App() {
         <Switch>
           <Route path="/about" component={About} />
           <Route path="/abc" component={Alphabet} />
-          <Route path="/reading" component={Syllables} />
+          <Route path="/reading" component={Reading} />
           <Route path="/vocabulary" component={Phrasebook} />
           <Redirect to="/about" />
         </Switch>
