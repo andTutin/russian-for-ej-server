@@ -22,7 +22,7 @@ export const About = () => {
         <br />
         The goal of this page is to make EJ understand space news from Russia
         with little or without translator help at all. Or read at least. It uses
-        WebSpeech API, which is experimental and works norminal only in Google
+        WebSpeech API, which is experimental and works norminal-ish in Google
         Chrome. But its free, so ...
         <br />
         <br />
