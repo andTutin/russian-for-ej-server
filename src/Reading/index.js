@@ -1,20 +1,23 @@
+import { useState } from "react";
 import { vowels, consonants } from "../alphabet";
 import { useSpeaker } from "../Speaker";
+import { syllabify } from "syllables-ru";
 
 export const Reading = () => {
   const sayit = useSpeaker();
+  const [syllables, setSyllables] = useState("");
 
   return (
-    <article  onClick={sayit}>
+    <article>
       <header>
         <h2>This is a Syllables table</h2>
       </header>
       <p>
-        Reading russian is kinda WYSIWYG. letter = sound. There are some exeptions, but it's not
-        like french.
+        Reading russian is kinda WYSIWYG. letter = sound. There are some
+        exeptions, but it's not like french.
       </p>
       <p>This is a consonant + vowel letter combinations table</p>
-      <table>
+      <table onClick={sayit}>
         <thead>
           <tr>
             <th></th>
@@ -39,15 +42,25 @@ export const Reading = () => {
         </tbody>
       </table>
       <p>
-        There are probably combos never used or break the rules, but there was a loop in
-        script, and i am too lazy to handle exceptions (you wont meet them anyway )
+        There are probably combos never used or break the rules, but there was a
+        loop in script, and i am too lazy to handle exceptions (you wont meet
+        them anyway )
       </p>
       <p>
         So you take the word, split in on syllables, read single letters and
         these combos
       </p>
       <aside>
-        <p>for example lets read word '<span data-say="вдохновение" style={{curdor: 'pointer'}}>Вдохновение</span>' (inspiration)</p>
+        <p>
+          for example lets read word '
+          <span
+            onClick={sayit}
+            data-say="вдохновение"
+          >
+            Вдохновение
+          </span>
+          ' (inspiration)
+        </p>
         <ul>
           <li>syllables вдо-хно-ве-ни-е</li>
           <li>then в[до]-х[но]-[ве]-[ни]- е</li>
@@ -64,7 +77,13 @@ export const Reading = () => {
         </ul>
       </aside>
       <p>But if it works differently here is word splitter</p>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSyllables(syllabify(e.target.word.value).split("·").join("-"));
+          e.target.word.value = "";
+        }}
+      >
         <input
           type="text"
           id="word"
@@ -73,6 +92,12 @@ export const Reading = () => {
           placeholder="split the word"
         />
         <button type="submit">syllabify</button>
+        <div
+          data-say={syllables.split("-").join("")}
+          onClick={sayit}
+        >
+          {syllables}
+        </div>
       </form>
     </article>
   );

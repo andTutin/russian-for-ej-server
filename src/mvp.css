@@ -468,3 +468,14 @@ blockquote footer {
 .root {
     height: 100vh
 }
+
+[data-say] {
+    cursor: pointer;
+}
+
+#alphabet {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
