@@ -9,14 +9,7 @@ export const Alphabet = () => {
       <header>
         <h2>Russian Alphabet</h2>
       </header>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
+      <div id="alphabet">
         {alphabet.map((l) => (
           <a href="/" key={l}>
             <i data-say={l}>{l.toUpperCase()}</i>
@@ -143,15 +136,15 @@ export const Alphabet = () => {
         <li>Hard sign and soft sign.</li>
         <li>Ь (soft sign) make previuos consonant letter soft</li>
         listen this
-        <div data-say="кон" style={{cursor: 'pointer'}}>кон</div>
-        <div data-say="конь" style={{cursor: 'pointer'}}>конь</div>
+        <div data-say="кон">кон</div>
+        <div data-say="конь">конь</div>
         <li>
           Both often used as sound devider. like they want you not to connect
           letters that it devides.{" "}
         </li>
         listen this
-        <div data-say="семя" style={{cursor: 'pointer'}}>семя</div>
-        <div data-say="семья" style={{cursor: 'pointer'}}>семья</div>
+        <div data-say="семя">семя</div>
+        <div data-say="семья">семья</div>
       </ul>
     </article>
   );

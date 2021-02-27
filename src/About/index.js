@@ -20,16 +20,10 @@ export const About = () => {
       <h1>
         <br />
         <br />
-        The goal of this page is to make EJ understand space news from Russia
-        with little or without translator help at all. Or read at least. It uses
-        WebSpeech API, which is experimental and works norminal-ish in Google
-        Chrome. But its free, so ...
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        The goal of this page is to teach EJ some russian: read first,
+        understand space news from Russia later. It uses WebSpeech API, which is
+        experimental and works norminal-ish only in Google Chrome. But its free,
+        so ...
         <br />
         <br />
       </h1>
