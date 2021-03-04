@@ -1,4 +1,4 @@
-import { alphabet } from "../alphabet";
+import { alphabet, alphaBetter } from "./alphabet";
 import { useSpeaker } from "../Speaker";
 
 export const Alphabet = () => {
@@ -7,23 +7,74 @@ export const Alphabet = () => {
   return (
     <article onClick={sayit}>
       <header>
-        <h2>Russian Alphabet</h2>
+        <h2>Alphabet</h2>
       </header>
-      <div id="alphabet">
-        {alphabet.map((l) => (
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between"
+        }}
+      >
+        {alphaBetter.map((a) => (
+          <div
+            key={a.letter}
+            data-say={a.letter}
+            className="letter-card"
+            style={{
+              width: "15%",
+              minWidth: "100px",
+              height: "200px",
+              background: `url(${a.bg}) center center  / cover`,
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "space-around",
+              borderRadius: "15px",
+              overflow: "hidden",
+              margin: "10px"
+            }}
+          >
+            <div
+              data-say={a.letter}
+              style={{
+                fontSize: "50px",
+                fontWeight: "700",
+                color: "#fff",
+                zIndex: "100"
+              }}
+            >
+              {a.letter.toUpperCase()}
+            </div>
+            <div
+              data-say={a.word.rus}
+              style={{
+                fontSize: "20px",
+                fontWeight: "700",
+                color: "#fff",
+                zIndex: "100"
+              }}
+            >
+              {a.word.translit}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center"
+        }}
+      >
+        {alphabet.slice(6).map((l) => (
           <a href="/" key={l}>
             <i data-say={l}>{l.toUpperCase()}</i>
           </a>
         ))}
       </div>
-      <header>
-        <h2>
-          <img
-            alt="wut"
-            src="https://static-cdn.jtvnw.net/emoticons/v2/28087/default/light/1.0"
-          />
-        </h2>
-      </header>
       <aside>
         <p>А, К, М, О, Т. These letters look and sound basically the same</p>
       </aside>
@@ -36,7 +87,11 @@ export const Alphabet = () => {
       </aside>
       <ul>
         <li>
-          В: like [v] - <b>V</b>enus, <b>V</b>ladimir *<b>RULE8</b>*
+          В: like [v] - <b>V</b>odka,
+          <span data-say="из рашн">
+            <b>V</b>enus
+          </span>
+          , <b>V</b>ladimir *<b>RULE8</b>*
         </li>
         <li>
           Е: like [ye] - <b>Ye</b>ah (James Hetfield pretty good at this)
@@ -48,13 +103,13 @@ export const Alphabet = () => {
           Р: like [r] - <b>RRR</b>AAAAA-TATATA <b>RRR</b>AAAAA-TATATATA
         </li>
         <li>
-          С: like [s] - <b>S</b>aturn 5, <b>S</b>tarship
+          С: like [s] - <b>S</b>aturn 5, <b>S</b>oyuz, auto<b>S</b>nort
         </li>
         <li>
           У: like [oo] - <b>Oo</b>ps
         </li>
         <li>
-          Х: like [h, kh] - <b>H</b>op (wen?)
+          Х: like [h, kh] - <b>H</b>ard Bass
         </li>
       </ul>
       <aside>
@@ -65,10 +120,10 @@ export const Alphabet = () => {
       </aside>
       <ul>
         <li>
-          Б: like [b] - <b>B</b>uran, <b>B</b>remo
+          Б: like [b] - <b>B</b>uran, <b>B</b>aikonur,
         </li>
         <li>
-          Г: like [g] - <b>G</b>lenn, <b>G</b>igafactory
+          Г: like [g] - <b>G</b>agarin, <b>G</b>lenn
         </li>
         <li>
           Д: like [d] - <b>D</b>iscovery, <b>D</b>ocking
@@ -86,13 +141,13 @@ export const Alphabet = () => {
           Л: like [l] - <b>L</b>aunch
         </li>
         <li>
-          П: like [p] - <b>P</b>erceverance, <b>P</b>yMbIH
+          П: like [p] - <b>P</b>erceverance, <b>P</b>rogress,
         </li>
         <li>
-          Ф: like [f] - <b>F</b>alcon 9, <b>F</b>errari
+          Ф: like [f] - <b>F</b>alcon 9, <b>F</b>ord
         </li>
         <li>
-          Э: like [a] - <b>E</b>ndeavour
+          Э: like [a] - <b>E</b>nergia, <b>E</b>ric Johnson
         </li>
         <li>
           Ю: like [u, you] - so<b>You</b>z
@@ -102,14 +157,11 @@ export const Alphabet = () => {
         </li>
       </ul>
       <aside>
-        <p>
-          Ё, Ж, Ц, Ч, Щ, Ш, Ы. Cold winters and these letters. God loves
-          russians
-        </p>
+        <p>Ё, Ж, Ц, Ч, Щ, Ш, Ы. Because God loves russians</p>
       </aside>
       <ul>
         <li>
-          Ё: like [yo] - what a <b>yo</b>ke
+          Ё: like [yo] - <b>Yo</b>da, <b>Yo</b>ghurt
         </li>
         <li>Ж: like [zh?] - looks like bug sound like bug</li>
         <li>
@@ -117,7 +169,7 @@ export const Alphabet = () => {
           <b>t's</b>
         </li>
         <li>
-          Ч: like [ch] - <b>Ch</b>allenger
+          Ч: like [ch] - <b>Ch</b>allenger, <b>Ch</b>et
         </li>
         <li>
           Щ: like [sh] - <b>Sh</b>uttle, <b>Sh</b>ip
@@ -134,6 +186,7 @@ export const Alphabet = () => {
       </aside>
       <ul>
         <li>Hard sign and soft sign.</li>
+        {/*
         <li>Ь (soft sign) make previuos consonant letter soft</li>
         listen this
         <div data-say="кон">кон</div>
@@ -144,8 +197,10 @@ export const Alphabet = () => {
         </li>
         listen this
         <div data-say="семя">семя</div>
-        <div data-say="семья">семья</div>
+        <div data-say="семья">семья</div>*/}
       </ul>
     </article>
   );
 };
+
+export * from "./alphabet";

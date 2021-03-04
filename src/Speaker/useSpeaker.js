@@ -6,7 +6,10 @@ export const useSpeaker = () => {
 
   return (e) => {
     e.preventDefault();
-    if (!e.target.dataset.say) return;
-    sayit(e.target.dataset.say);
+    if (e.target.dataset.say) {
+      sayit(e.target.dataset.say);
+    } else {
+      return;
+    }
   };
 };

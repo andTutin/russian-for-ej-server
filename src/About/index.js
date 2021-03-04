@@ -19,12 +19,11 @@ export const About = () => {
       </aside>
       <h1>
         <br />
+        This page uses WebSpeech API, which is experimental and works norminal
+        only in Google Chrome.
         <br />
-        The goal of this page is to teach EJ some russian: read first,
-        understand space news from Russia later. It uses WebSpeech API, which is
-        experimental and works norminal-ish only in Google Chrome. But its free,
-        so ...
         <br />
+        Click the word if cursor has changed.
         <br />
       </h1>
     </section>

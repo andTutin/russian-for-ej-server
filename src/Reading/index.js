@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { vowels, consonants } from "../alphabet";
+import { vowels, consonants } from "../Alphabet";
 import { useSpeaker } from "../Speaker";
 import { syllabify } from "syllables-ru";
 
@@ -42,9 +42,9 @@ export const Reading = () => {
         </tbody>
       </table>
       <p>
-        There are probably combos never used or break the rules, but there was a
-        loop in script, and i am too lazy to handle exceptions (you wont meet
-        them anyway )
+        There are probably combos that never used irl or break the rules of
+        language, but there was a loop in the script, and i am too lazy to
+        handle exceptions (you won't meet them anyway right?)
       </p>
       <p>
         So you take the word, split in on syllables, read single letters and
@@ -53,30 +53,26 @@ export const Reading = () => {
       <aside>
         <p>
           for example lets read word '
-          <span
-            onClick={sayit}
-            data-say="вдохновение"
-          >
+          <span onClick={sayit} data-say="вдохновение">
             Вдохновение
           </span>
           ' (inspiration)
         </p>
-        <ul>
-          <li>syllables вдо-хно-ве-ни-е</li>
-          <li>then в[до]-х[но]-[ве]-[ни]- е</li>
-          <li>[] means it exist in table, find it and press to listen</li>
-          <li>
-            connect single letters (sometimes it more than one, but its not a
-            problem) and combos
-          </li>
-          <li>result v[do] - kh[no] - [ve] - [nee] - ye</li>
-          <li>
-            i dont really know why i am doing this, 146% sure you know how
-            reading works
-          </li>
-        </ul>
       </aside>
-      <p>But if it works differently here is word splitter</p>
+      <ul>
+        <li>split on syllables вдо-хно-ве-ни-е</li>
+        <li>
+          then split on singles and combos. Like this в [до]-х [но]-[ве]-[ни]- е
+        </li>
+        <li>
+          read single letters as is and combos (check how it sound in the table)
+        </li>
+        <li>Congratulatios. Your russian is perfect!</li>
+      </ul>
+      <p>
+        Here is the happy little helper. Press button to split, then click
+        result to listen the word.
+      </p>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -91,14 +87,28 @@ export const Reading = () => {
           size="20"
           placeholder="split the word"
         />
-        <button type="submit">syllabify</button>
-        <div
-          data-say={syllables.split("-").join("")}
-          onClick={sayit}
-        >
+        <div data-say={syllables.split("-").join("")} onClick={sayit}>
           {syllables}
         </div>
+        <button type="submit">get help</button>
       </form>
+      <br />
+      <aside>
+        <p>Hard sign and soft sign.</p>
+      </aside>
+      <ul onClick={sayit}>
+        <li>Ь (soft sign) make previuos consonant letter soft</li>
+        listen this
+        <div data-say="кон">кон</div>
+        <div data-say="конь">конь</div>
+        <li>
+          Both often used as sound devider. like they want you not to connect
+          letters that it devides.{" "}
+        </li>
+        listen this
+        <div data-say="семя">семя</div>
+        <div data-say="семья">семья</div>
+      </ul>
     </article>
   );
 };
