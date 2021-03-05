@@ -13,7 +13,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js"
+    "server": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,11 @@
   },
   "homepage": "https://github.com/andTutin/russian-for-ej#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.4",
     "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.18"
   },
   "devDependencies": {
