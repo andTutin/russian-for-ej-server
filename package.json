@@ -1,19 +1,36 @@
 {
   "name": "russian-for-ej",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
+  "description": "english - russian space related phrasebook",
+  "keywords": [
+    "mongodb",
+    "express",
+    "react",
+    "node",
+    "mern",
+    "webspeech"
+  ],
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "server": "nodemon app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andTutin/russian-for-ej.git"
   },
-  "author": "",
+  "author": "Andrey Tutin <and.tutin@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/andTutin/russian-for-ej/issues"
   },
-  "homepage": "https://github.com/andTutin/russian-for-ej#readme"
+  "homepage": "https://github.com/andTutin/russian-for-ej#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.18"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "nodemon": "^2.0.7"
+  }
 }
