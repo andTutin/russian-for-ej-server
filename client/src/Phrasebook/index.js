@@ -1,4 +1,5 @@
 import { useSpeaker } from "../Speaker";
+import { Link } from "react-router-dom";
 
 export const Phrasebook = () => {
   const sayit = useSpeaker();
@@ -10,7 +11,7 @@ export const Phrasebook = () => {
           display: "flex",
           alignItems: "stretch",
           justifyContent: "space-between",
-          marginBottom: "20px"
+          marginBottom: "20px",
         }}
       >
         <select id="snort" style={{ margin: "0" }} defaultValue="">
@@ -30,17 +31,12 @@ export const Phrasebook = () => {
           style={{
             display: "flex",
             alignItems: "stretch",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
-          <input
-            type="text"
-            placeholder="word to add"
-            style={{ justifySelf: "flex-end", margin: "0" }}
-          />
-          <button type="button" style={{ margin: "0 0 0 10px" }}>
-            add word
-          </button>
+          <Link to="/add">
+            <button type="button">add word</button>
+          </Link>
         </div>
       </div>
       <article onClick={sayit}>
