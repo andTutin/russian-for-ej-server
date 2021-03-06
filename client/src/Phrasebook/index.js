@@ -39,6 +39,7 @@ export const Phrasebook = () => {
           </Link>
         </div>
       </div>
+      {/*
       <article onClick={sayit}>
         <aside>
           <p>Directions</p>
@@ -102,6 +103,7 @@ export const Phrasebook = () => {
           <p>...</p>
         </aside>
       </article>
+      */}
     </>
   );
 };
