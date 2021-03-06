@@ -43,4 +43,11 @@ router.post(
   }
 );
 
+router.post("/", async (req, res) => {
+  console.log(req.body);
+  const { category } = req.body;
+  const words = await Word.find({ category });
+  res.json(words);
+});
+
 module.exports = router;
