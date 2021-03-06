@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Login = ({login}) => {
+export const Login = ({ login }) => {
   const [form, setForm] = useState({
     nickname: "",
     password: "",
@@ -31,21 +31,24 @@ export const Login = ({login}) => {
   };
   */
 
- const loginRequest = async (e) => {
-  e.preventDefault();
+  const loginRequest = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(form),
-    });
-
-    if (res.ok) login(true);
-  } catch (error) {}
- }; 
+    try {
+      const res = await fetch("api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(form),
+      });
+      
+      if (res.ok) {
+        const {token , userId} = await res.json()
+        login(token, userId)
+      }
+    } catch (error) {}
+  };
 
   return (
     <>

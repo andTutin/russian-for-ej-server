@@ -3,15 +3,19 @@ import { Addmin } from "./Addmin";
 import { Login } from "./Login";
 
 export const Addword = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { token } = JSON.parse(localStorage.getItem("userData"));
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
   if (isLoggedIn) {
     return <Addmin />;
   }
 
-  const login = (bool) => {
-    setIsLoggedIn(bool)
-  }
+  const login = (token, userId) => {
+    localStorage.setItem("userData", JSON.stringify({ token, userId }));
+    setIsLoggedIn(true);
+  };
 
-  return <Login login={login}/>;
+  return <Login login={login} />;
 };
+ 
