@@ -34,14 +34,19 @@ router.post(
     } catch (error) {
       res
         .status(500)
-        .json({ message: `I'm not saying it was aliens, but it was aliens` });
+        .json({ message: "Что-то пошло не так! Попробуйте снова." });
     }
   }
 );
 
 router.get("/", async (req, res) => {
-  const categories = await Category.find()
-  res.json(categories);
+  try {
+    const categories = await Category.find();
+
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: "Что-то пошло не так! Попробуйте снова." });
+  }
 });
 
 module.exports = router;

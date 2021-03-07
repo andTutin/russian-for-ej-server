@@ -29,8 +29,8 @@ export const Phrasebook = () => {
 
   useEffect(() => {
     const getWords = async (activeCategory) => {
-      if (!activeCategory) return
-      
+      if (!activeCategory) return;
+
       try {
         const res = await fetch("api/word", {
           method: "POST",
@@ -40,7 +40,6 @@ export const Phrasebook = () => {
           body: JSON.stringify({ category: activeCategory }),
         });
         const data = await res.json();
-        console.log(data);
         setWords(data);
       } catch (error) {}
     };
@@ -88,7 +87,7 @@ export const Phrasebook = () => {
         <div style={{ flex: "1" }}>
           {categories.map((c) => (
             <article key={c._id}>
-              <aside>
+              <aside onClick={() => setActiveCategory(c.title)} style={{cursor: 'pointer'}}>
                 <p>{c.title}</p>
               </aside>
               <br />

@@ -85,7 +85,7 @@ router.post(
     } catch (error) {
       res
         .status(500)
-        .json({ message: `I'm not saying it was aliens, but it was aliens` });
+        .json({ message: "Что-то пошло не так! Попробуйте снова." });
     }
   }
 );

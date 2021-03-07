@@ -38,16 +38,35 @@ router.post(
     } catch (error) {
       res
         .status(500)
-        .json({ message: `I'm not saying it was aliens, but it was aliens` });
+        .json({ message: "Что-то пошло не так! Попробуйте снова." });
     }
   }
 );
 
-router.post("/", async (req, res) => {
-  console.log(req.body);
-  const { category } = req.body;
-  const words = await Word.find({ category });
-  res.json(words);
-});
+router.post(
+  "/",
+  [check("category", "В теле запроса отсутсвует Категория").exists()],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+          message: "Некорректные данные при запросе слов",
+        });
+      }
+
+      const { category } = req.body;
+      const words = await Word.find({ category });
+
+      res.json(words);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Что-то пошло не так! Попробуйте снова." });
+    }
+  }
+);
 
 module.exports = router;
