@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
+import { Wordform } from "./Wordform";
 
 export const Addmin = () => {
   const [category, setCategory] = useState("");
-  const [word, setWord] = useState({
-    english: "",
-    russian: "",
-    category: "",
-  });
+  const [categories, setCategories] = useState([]);
 
-  const [categories, setCategories]= useState([]);
-
-  const testCatRequest = async () => {
+  const categoriesRequest = async () => {
     try {
       const res = await fetch("api/category", {
         method: "GET",
@@ -18,25 +13,18 @@ export const Addmin = () => {
           "Content-Type": "application/json;charset=utf-8",
         },
       });
-      const resp = await res.json()
-      console.log(resp);
-      setCategories(resp)
+      const data = await res.json();
+      setCategories(data);
+      setCategory("");
     } catch (error) {}
   };
 
   useEffect(() => {
-    testCatRequest();
-  }, [])
+    categoriesRequest();
+  }, []);
 
   const changeCategoryHandler = (e) => {
     setCategory(e.target.value);
-  };
-
-  const changeWordHandler = (e) => {
-    setWord({
-      ...word,
-      [e.target.name]: e.target.value,
-    });
   };
 
   const handleCategorySubmit = async (e) => {
@@ -50,24 +38,17 @@ export const Addmin = () => {
         },
         body: JSON.stringify({ category }),
       });
-      console.log(res);
-      testCatRequest()
-    } catch (error) {}
-  };
-
-  const handleWordSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch("api/word/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(word),
-      });
-      console.log(res);
-    } catch (error) {}
+      if (res.ok) {
+        const { message } = await res.json();
+        alert(message);
+        categoriesRequest();
+      } else {
+        const { message } = await res.json();
+        alert(message);
+      }
+    } catch (e) {
+      alert('Что-то пошло не так! Попробуйте снова.');
+    }
   };
 
   return (
@@ -87,50 +68,14 @@ export const Addmin = () => {
           name="newcategory"
           id="newcategory"
           onChange={changeCategoryHandler}
+          value={category}
         />
         <button type="submit" style={{ margin: "0 0 0 10px" }}>
           добавить
         </button>
       </form>
       <br />
-      <form onSubmit={handleWordSubmit}
-        style={{
-          maxWidth: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="новое слово англ"
-          name="english"
-          id="english"
-          style={{ margin: "0" }}
-          onChange={changeWordHandler}
-        />
-        <input
-          type="text"
-          placeholder="перевод на рус"
-          name="russian"
-          id="russian"
-          style={{ margin: "0" }}
-          onChange={changeWordHandler}
-        />
-        <select
-          id="category"
-          name="category"
-          style={{ margin: "0" }}
-          defaultValue=""
-          onChange={changeWordHandler}
-        >
-          <option value="" disabled>
-            Выбери категорию:
-          </option>
-          {categories.map(c => <option value={c.title}>{c.title}</option>)}
-          
-        </select>
-        <button type="submit">добавить</button>
-      </form>
+      <Wordform categories={categories} />
     </>
   );
 };

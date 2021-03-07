@@ -6,20 +6,19 @@ const router = Router();
 
 router.post(
   "/add",
-  [check("category", "Введи название категории").exists()],
+  [check("category", "Введи название категории").exists().isLength({ min: 1 })],
   async (req, res) => {
     try {
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
-          message: "Некорректные данные при добавлении Категории",
+          message: "Введите название Категории",
         });
       }
 
       const { category } = req.body;
-      const candidate = await Category.findOne({ category });
+      const candidate = await Category.findOne({ title: category });
 
       if (candidate) {
         return res
