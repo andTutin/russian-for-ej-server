@@ -25,14 +25,24 @@ export const Wordform = ({ categories }) => {
         },
         body: JSON.stringify(word),
       });
-      const data = await res.json();
-      console.log(data);
-      setWord({
-        english: "",
-        russian: "",
-        category: "",
-      });
-    } catch (error) {}
+
+      if (res.ok) {
+        const { message } = await res.json();
+
+        alert(message);
+        setWord({
+          english: "",
+          russian: "",
+          category: "",
+        });
+      } else {
+        const { message } = await res.json();
+
+        alert(message);
+      }
+    } catch (e) {
+      alert("Что-то пошло не так! Попробуйте снова.");
+    }
   };
 
   return (
@@ -66,7 +76,7 @@ export const Wordform = ({ categories }) => {
         id="category"
         name="category"
         style={{ margin: "0" }}
-        defaultValue={word.category}
+        value={word.category}
         onChange={changeWordHandler}
       >
         <option value="" disabled>

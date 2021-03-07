@@ -7,9 +7,9 @@ const router = Router();
 router.post(
   "/add",
   [
-    check("english", "Введи слово на английском").exists(),
-    check("russian", "Введи слово на русском").exists(),
-    check("category", "Выбери категорию").exists(),
+    check("english", "Введи слово на английском").isLength({ min: 1 }),
+    check("russian", "Введи слово на русском").isLength({ min: 1 }),
+    check("category", "Выбери категорию").isLength({ min: 1 }),
   ],
   async (req, res) => {
     try {
@@ -17,7 +17,6 @@ router.post(
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
           message: "Некорректные данные при добавлении Слова",
         });
       }
@@ -52,8 +51,7 @@ router.post(
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
-          message: "Некорректные данные при запросе слов",
+          message: "В теле запроса отсутствует Категория",
         });
       }
 
