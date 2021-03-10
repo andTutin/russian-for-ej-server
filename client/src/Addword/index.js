@@ -3,7 +3,7 @@ import { Addmin } from "./Addmin";
 import { Login } from "./Login";
 
 export const Addword = () => {
-  const { token } = JSON.parse(localStorage.getItem("userData"));
+  const { token } = JSON.parse(localStorage.getItem("userData")) || '';
 
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 

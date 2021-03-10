@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Wordform } from "./Wordform";
+import {Register} from './Register'
 
 export const Addmin = () => {
   const [category, setCategory] = useState("");
@@ -53,6 +54,7 @@ export const Addmin = () => {
 
   return (
     <>
+      <h3>Добавить новую категорию слов.</h3>
       <form
         onSubmit={handleCategorySubmit}
         style={{
@@ -76,6 +78,8 @@ export const Addmin = () => {
       </form>
       <br />
       <Wordform categories={categories} />
+      <br />
+      <Register />
     </>
   );
 };

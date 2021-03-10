@@ -46,49 +46,52 @@ export const Wordform = ({ categories }) => {
   };
 
   return (
-    <form
-      onSubmit={handleWordSubmit}
-      style={{
-        maxWidth: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      <input
-        type="text"
-        placeholder="новое слово англ"
-        name="english"
-        id="english"
-        style={{ margin: "0" }}
-        onChange={changeWordHandler}
-        value={word.english}
-      />
-      <input
-        type="text"
-        placeholder="перевод на рус"
-        name="russian"
-        id="russian"
-        style={{ margin: "0" }}
-        onChange={changeWordHandler}
-        value={word.russian}
-      />
-      <select
-        id="category"
-        name="category"
-        style={{ margin: "0" }}
-        value={word.category}
-        onChange={changeWordHandler}
+    <>
+      <h3>Добавить новое слово.</h3>
+      <form
+        onSubmit={handleWordSubmit}
+        style={{
+          maxWidth: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        <option value="" disabled>
-          Выбери категорию:
-        </option>
-        {categories.map((c) => (
-          <option key={c._id} value={c.title}>
-            {c.title}
+        <input
+          type="text"
+          placeholder="новое слово англ"
+          name="english"
+          id="english"
+          style={{ margin: "0" }}
+          onChange={changeWordHandler}
+          value={word.english}
+        />
+        <input
+          type="text"
+          placeholder="перевод на рус"
+          name="russian"
+          id="russian"
+          style={{ margin: "0" }}
+          onChange={changeWordHandler}
+          value={word.russian}
+        />
+        <select
+          id="category"
+          name="category"
+          style={{ margin: "0" }}
+          value={word.category}
+          onChange={changeWordHandler}
+        >
+          <option value="" disabled>
+            Выбери категорию:
           </option>
-        ))}
-      </select>
-      <button type="submit">добавить</button>
-    </form>
+          {categories.map((c) => (
+            <option key={c._id} value={c.title}>
+              {c.title}
+            </option>
+          ))}
+        </select>
+        <button type="submit">добавить</button>
+      </form>
+    </>
   );
 };

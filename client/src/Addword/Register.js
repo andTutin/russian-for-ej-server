@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Login = ({ login }) => {
+export const Register = () => {
   const [form, setForm] = useState({
     nickname: "",
     password: "",
@@ -13,34 +13,36 @@ export const Login = ({ login }) => {
     });
   };
 
-  const loginRequest = async (e) => {
+  const registerNewUser = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("api/auth/login", {
+      const res = await fetch("api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form }),
       });
-      
-      if (res.ok) {
-        const {token , userId} = await res.json()
-        login(token, userId)
-      }
-    } catch (error) {}
+      if (res.ok) alert("Пользователь добавлен");
+      setForm({
+        nickname: "",
+        password: "",
+      });
+    } catch (error) {
+      alert("Пользователь не добавлен");
+    }
   };
 
   return (
     <>
+      <h3>Зарегистрировать нового пользователя.</h3>
       <form
         style={{
-          margin: "0 auto",
           display: "flex",
           justifyContent: "space-between",
         }}
-        onSubmit={loginRequest}
+        onSubmit={registerNewUser}
       >
         <input
           style={{ margin: "0" }}
@@ -49,6 +51,7 @@ export const Login = ({ login }) => {
           id="nickname"
           placeholder="никнейм"
           onChange={changeHandler}
+          value={form.nickname}
         />
         <input
           style={{ margin: "0" }}
@@ -57,20 +60,15 @@ export const Login = ({ login }) => {
           id="password"
           placeholder="пароль"
           onChange={changeHandler}
+          value={form.password}
         />
-        <button style={{ margin: "0" }} disabled={!(form.nickname && form.password)}>Войти</button>
+        <button
+          style={{ margin: "0" }}
+          disabled={!(form.nickname && form.password)}
+        >
+          Зарегистрировать
+        </button>
       </form>
-      <br />
-      <br />
-      <h3
-        style={{
-          width: "max-content",
-          margin: "0 auto",
-        }}
-      >
-        This page is for russian viewers. Пиши в личку PyMbIH_, чтобы получить
-        доступ.
-      </h3>
     </>
   );
 };
