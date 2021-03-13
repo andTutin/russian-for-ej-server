@@ -20,7 +20,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "Некорректные данные при регистрации",
+          message: "Некорректные данные при регистрации нового пользователя",
         });
       }
 
@@ -41,7 +41,7 @@ router.post(
     } catch (error) {
       res
         .status(500)
-        .json({ message: `I'm not saying it was aliens, but it was aliens` });
+        .json({ message: "Что-то пошло не так! Попробуйте снова." });
     }
   }
 );
@@ -49,8 +49,8 @@ router.post(
 router.post(
   "/login",
   [
-    check("nickname", "Введите никнэйм").exists(),
-    check("password", "Введите пароль").exists(),
+    check("nickname", "Введите никнэйм").isLength({ min: 1 }),
+    check("password", "Введите пароль").isLength({ min: 6 }),
   ],
   async (req, res) => {
     try {
@@ -58,31 +58,29 @@ router.post(
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
           message: "Некорректные данные при попытке входа",
         });
       }
 
       const { nickname, password } = req.body;
+
       const user = await User.findOne({ nickname });
 
       if (!user) {
-        return res
-          .status(400)
-          .json({ message: "Пользователь с таким именем не найден" });
+        return res.status(400).json({ message: "Ошибка авторизации" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ message: "Пароль указан неверно" });
+        return res.status(400).json({ message: "Ошибка авторизации" });
       }
 
       const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
         expiresIn: "1h",
       });
 
-      res.json({ token, userId });
+      res.status(200).json({ token, userId: user.id });
     } catch (error) {
       res
         .status(500)
