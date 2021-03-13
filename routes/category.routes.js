@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const config = require("config");
 const { check, validationResult } = require("express-validator");
 const Category = require("../models/Category");
 const router = Router();
