@@ -10,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 router.post(
   "/register",
   [
-    check("nickname", "Введите Никнэйм").exists(),
+    check("nickname", "Введите Никнэйм").isLength({ min: 1 }),
     check("password", "Минимум 6 символов").isLength({ min: 6 }),
   ],
   async (req, res) => {
@@ -33,7 +33,7 @@ router.post(
           .json({ message: "Такой пользователь уже существует!" });
       }
 
-      const hashedPassword = await bcrypt.hash(password, 12);
+      const hashedPassword = await bcrypt.hash(password, 8);
       const user = new User({ nickname, password: hashedPassword });
 
       await user.save();
@@ -82,7 +82,7 @@ router.post(
         expiresIn: "1h",
       });
 
-      res.json({ token, userId: user.id });
+      res.json({ token, userId });
     } catch (error) {
       res
         .status(500)

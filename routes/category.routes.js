@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const Category = require("../models/Category");
+const User = require("../models/User");
 const router = Router();
 
 router.post(
-  "/add",
-  [check("category", "Введи название категории").exists().isLength({ min: 1 })],
+  "/",
+  [check("category", "Введи название категории").isLength({ min: 1 })],
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -16,7 +17,7 @@ router.post(
         });
       }
 
-      const { category } = req.body;
+      const { category, userId } = req.body;
       const candidate = await Category.findOne({ title: category });
 
       if (candidate) {
@@ -25,7 +26,8 @@ router.post(
           .json({ message: "Такая Категория уже существует!" });
       }
 
-      const newcategory = new Category({ title: category });
+      const { nickname } = await User.findById(userId);
+      const newcategory = new Category({ title: category, addedBy: nickname });
 
       await newcategory.save();
       res.status(201).json({ message: "Категория создана!" });

@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const Word = require("../models/Word");
+const User = require("../models/User");
 const router = Router();
 
 router.post(
-  "/add",
+  "/",
   [
     check("english", "Введи слово на английском").isLength({ min: 1 }),
     check("russian", "Введи слово на русском").isLength({ min: 1 }),
@@ -20,16 +21,23 @@ router.post(
         });
       }
 
-      const { english, russian, category } = req.body;
+      const { english, russian, category, userId } = req.body;
       const candidate = await Word.findOne({ english });
 
-      if (candidate) {
-        return res
-          .status(400)
-          .json({ message: "Такое слово уже есть в словаре!" });
+      if (candidate && candidate.category === category) {
+        return res.status(400).json({
+          message: `Такое слово уже есть в словаре в категории '${category}'!`,
+        });
       }
 
-      const newword = new Word({ english, russian, category });
+      const { nickname } = await User.findById(userId);
+      const newword = new Word({
+        english,
+        russian,
+        category,
+        addedBy: nickname,
+        addedTime: Date.now(),
+      });
 
       await newword.save();
       res.status(201).json({ message: "Слово добавлено!" });
@@ -41,29 +49,25 @@ router.post(
   }
 );
 
-router.post(
-  "/",
-  [check("category", "В теле запроса отсутсвует Категория").exists()],
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
+router.get("/", async (req, res) => {
+  try {
+    const words = await Word.find();
 
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          message: "В теле запроса отсутствует Категория",
-        });
-      }
-
-      const { category } = req.body;
-      const words = await Word.find({ category });
-
-      res.json(words);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Что-то пошло не так! Попробуйте снова." });
-    }
+    res.json(words);
+  } catch (error) {
+    res.status(500).json({ message: "Что-то пошло не так! Попробуйте снова." });
   }
-);
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const { category } = req.query;
+    const words = await Word.find({ category });
+
+    res.json(words);
+  } catch (error) {
+    res.status(500).json({ message: "Что-то пошло не так! Попробуйте снова." });
+  }
+});
 
 module.exports = router;
