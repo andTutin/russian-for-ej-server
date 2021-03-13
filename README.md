@@ -1,1 +1,1 @@
-# small interactive english - russian space related vocabulary/phrasebook
+# backend for russian-for-ej
