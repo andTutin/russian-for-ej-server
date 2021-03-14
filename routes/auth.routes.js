@@ -61,7 +61,7 @@ router.post(
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          message: "Некорректные данные при попытке входа",
+          message: "Ошибка авторизации",
         });
       }
 
