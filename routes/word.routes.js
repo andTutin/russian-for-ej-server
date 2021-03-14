@@ -2,10 +2,12 @@ const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const Word = require("../models/Word");
 const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
 const router = Router();
 
 router.post(
   "/",
+  auth,
   [
     check("english", "Введи слово на английском").isLength({ min: 1 }),
     check("russian", "Введи слово на русском").isLength({ min: 1 }),
@@ -21,7 +23,7 @@ router.post(
         });
       }
 
-      const { english, russian, category, userId } = req.body;
+      const { english, russian, category } = req.body;
       const candidate = await Word.findOne({ english });
 
       if (candidate && candidate.category === category) {
@@ -30,6 +32,7 @@ router.post(
         });
       }
 
+      const { userId } = req.user;
       const { nickname } = await User.findById(userId);
       const newword = new Word({
         english,

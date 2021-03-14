@@ -1,14 +1,13 @@
-require("dotenv").config();
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post(
   "/register",
+  auth,
   [
     check("nickname", "Введите Никнэйм").isLength({ min: 1 }),
     check("password", "Минимум 6 символов").isLength({ min: 6 }),
@@ -63,7 +62,6 @@ router.post(
       }
 
       const { nickname, password } = req.body;
-
       const user = await User.findOne({ nickname });
 
       if (!user) {

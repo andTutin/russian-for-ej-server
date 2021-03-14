@@ -2,10 +2,12 @@ const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const Category = require("../models/Category");
 const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
 const router = Router();
 
 router.post(
   "/",
+  auth,
   [check("category", "Введи название категории").isLength({ min: 1 })],
   async (req, res) => {
     try {
@@ -17,7 +19,7 @@ router.post(
         });
       }
 
-      const { category, userId } = req.body;
+      const { category } = req.body;
       const candidate = await Category.findOne({ title: category });
 
       if (candidate) {
@@ -26,6 +28,7 @@ router.post(
           .json({ message: "Такая Категория уже существует!" });
       }
 
+      const { userId } = req.user;
       const { nickname } = await User.findById(userId);
       const newcategory = new Category({ title: category, addedBy: nickname });
 
