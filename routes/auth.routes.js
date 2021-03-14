@@ -3,15 +3,17 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const auth = require("../middleware/auth.middleware");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const router = Router();
 
 router.post(
   "/register",
   auth,
   [
-    check("nickname", "Введите Никнэйм").isLength({ min: 1 }),
-    check("password", "Минимум 6 символов").isLength({ min: 6 }),
+    check("nickname", "Отсутсвует никнэйм").isLength({ min: 1 }),
+    check("password", "Пароль должен быть минимум 6 символов длиной").isLength({
+      min: 6,
+    }),
   ],
   async (req, res) => {
     try {
@@ -19,8 +21,9 @@ router.post(
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
-          message: "Некорректные данные при регистрации нового пользователя",
+          message: errors.array()[1]
+            ? errors.array()[0].msg + "\n" + errors.array()[1].msg
+            : errors.array()[0].msg,
         });
       }
 
@@ -55,22 +58,22 @@ router.post(
   async (req, res) => {
     try {
       const errors = validationResult(req);
-      
+
       if (!errors.isEmpty()) {
         return res.status(400).json({
           message: "Некорректные данные при попытке входа",
         });
       }
-      
+
       const { nickname, password } = req.body;
       const user = await User.findOne({ nickname });
-      
+
       if (!user) {
         return res.status(400).json({ message: "Ошибка авторизации" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
-      
+
       if (!isMatch) {
         return res.status(400).json({ message: "Ошибка авторизации" });
       }
@@ -78,7 +81,7 @@ router.post(
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
-      
+
       res.status(200).json({ token, userId: user.id });
     } catch (error) {
       res
