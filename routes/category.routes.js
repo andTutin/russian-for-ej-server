@@ -33,7 +33,7 @@ router.post(
       const newcategory = new Category({ title: category, addedBy: nickname });
 
       await newcategory.save();
-      res.status(201).json({ message: "Категория создана!" });
+      res.status(201).json({ message: "Категория создана!", newcategory });
     } catch (error) {
       res
         .status(500)
