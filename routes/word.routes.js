@@ -24,9 +24,9 @@ router.post(
       }
 
       const { english, russian, category } = req.body;
-      const candidate = await Word.findOne({ english });
-
-      if (candidate && candidate.category === category) {
+      const candidate = await Word.find({ english });
+      
+      if (candidate.find(c => c.category === category)) {
         return res.status(400).json({
           message: `Такое слово уже есть в словаре в категории '${category}'!`,
         });

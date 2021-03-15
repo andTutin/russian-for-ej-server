@@ -91,4 +91,15 @@ router.post(
   }
 );
 
+router.get("/", async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded) res.status(200).json({ message: "valid token" });
+  } catch (error) {
+    return res.status(401).json({ message: "Нет авторизации" });
+  }
+});
+
 module.exports = router;
