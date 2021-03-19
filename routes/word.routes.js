@@ -1,9 +1,11 @@
 const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
+const T = require('cyrillic-to-translit-js');
 const Word = require("../models/Word");
 const User = require("../models/User");
 const auth = require("../middleware/auth.middleware");
 const router = Router();
+const translit = new T();
 
 router.post(
   "/",
@@ -22,7 +24,7 @@ router.post(
           message: "Некорректные данные при добавлении Слова",
         });
       }
-
+      
       const { english, russian, category } = req.body;
       const candidate = await Word.find({ english });
       
@@ -37,6 +39,7 @@ router.post(
       const newword = new Word({
         english,
         russian,
+        translit: translit.transform(russian),
         category,
         addedBy: nickname,
         addedTime: Date.now(),
