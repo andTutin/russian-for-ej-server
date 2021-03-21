@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
-const T = require('cyrillic-to-translit-js');
+const T = require("cyrillic-to-translit-js");
 const Word = require("../models/Word");
 const User = require("../models/User");
 const auth = require("../middleware/auth.middleware");
+const Category = require("../models/Category");
 const router = Router();
 const translit = new T();
 
@@ -13,7 +14,7 @@ router.post(
   [
     check("english", "Введи слово на английском").isLength({ min: 1 }),
     check("russian", "Введи слово на русском").isLength({ min: 1 }),
-    check("category", "Выбери категорию").isLength({ min: 1 }),
+    check("categoryId", "Выбери категорию").isLength({ min: 1 }),
   ],
   async (req, res) => {
     try {
@@ -24,13 +25,15 @@ router.post(
           message: "Некорректные данные при добавлении Слова",
         });
       }
-      
-      const { english, russian, category } = req.body;
-      const candidate = await Word.find({ english });
-      
-      if (candidate.find(c => c.category === category)) {
+
+      const { english, russian, categoryId } = req.body;
+      const candidate = await Word.findOne({ english, categoryId });
+
+      if (candidate) {
+        const { title } = await Category.findById(categoryId);
+
         return res.status(400).json({
-          message: `Такое слово уже есть в словаре в категории '${category}'!`,
+          message: `Такое слово уже есть в словаре в категории '${title}'!`,
         });
       }
 
@@ -40,9 +43,8 @@ router.post(
         english,
         russian,
         translit: translit.transform(russian),
-        category,
-        addedBy: nickname,
-        addedTime: Date.now(),
+        categoryId,
+        author: nickname,
       });
 
       await newword.save();
@@ -67,8 +69,8 @@ router.get("/", async (req, res) => {
 
 router.get("/search", async (req, res) => {
   try {
-    const { category } = req.query;
-    const words = await Word.find({ category });
+    const { categoryId } = req.query;
+    const words = await Word.find({ categoryId });
 
     res.json(words);
   } catch (error) {

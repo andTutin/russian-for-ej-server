@@ -30,7 +30,7 @@ router.post(
 
       const { userId } = req.user;
       const { nickname } = await User.findById(userId);
-      const newcategory = new Category({ title: category, addedBy: nickname });
+      const newcategory = new Category({ title: category, author: nickname });
 
       await newcategory.save();
       res.status(201).json({ message: "Категория создана!", newcategory });
